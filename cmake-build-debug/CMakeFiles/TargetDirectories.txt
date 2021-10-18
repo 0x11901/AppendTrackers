@@ -1,3 +1,0 @@
-C:/Users/wangjingkai/Works/Projects/AppendTrackers/cmake-build-debug/CMakeFiles/AppendTrackers.dir
-C:/Users/wangjingkai/Works/Projects/AppendTrackers/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/wangjingkai/Works/Projects/AppendTrackers/cmake-build-debug/CMakeFiles/rebuild_cache.dir
