@@ -1,6 +1,37 @@
-cmake_minimum_required(VERSION 3.20)
-project(AppendTrackers)
+# ****************************************************************************
+# Copyright (c) 2018-2021 WANG,Jingkai. All rights reserved.
+#
+# This code is licensed under the MIT License (MIT).
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# ****************************************************************************
 
+cmake_minimum_required(VERSION 3.20)
+set(APP_NAME AppendTrackers)
+project(${APP_NAME})
+
+set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(AppendTrackers main.cpp)
+add_executable(
+        ${APP_NAME}
+        main.cpp
+)
+
+#find_package(OpenSSL REQUIRED)
+#if (OPENSSL_FOUND)
+#    include_directories(${OPENSSL_INCLUDE_DIR})
+#else ()
+#    message("Compiling need SSL support")
+#endif ()
+
+target_link_libraries(
+        ${APP_NAME}
+        #        ${OPENSSL_LIBRARIES}
+)
