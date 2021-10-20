@@ -24,14 +24,6 @@ add_executable(
         main.cpp
 )
 
-#find_package(OpenSSL REQUIRED)
-#if (OPENSSL_FOUND)
-#    include_directories(${OPENSSL_INCLUDE_DIR})
-#else ()
-#    message("Compiling need SSL support")
-#endif ()
-
 target_link_libraries(
         ${APP_NAME}
-        #        ${OPENSSL_LIBRARIES}
 )
