@@ -12,9 +12,11 @@
 // THE SOFTWARE.
 //******************************************************************************
 
+#include "clip/clip.h"
 #include <iostream>
 
 int main() {
     std::cout << "hello, world!" << std::endl;
+    clip::set_text("hello, world!");
     return 0;
 }
