@@ -12,11 +12,24 @@
 // THE SOFTWARE.
 //******************************************************************************
 
+#include "boxer/boxer.h"
 #include "clip/clip.h"
-#include <iostream>
+
+int checkIfText();
 
 int main() {
-    std::cout << "hello, world!" << std::endl;
-    clip::set_text("hello, world!");
+    auto ret = 0;
+    ret = checkIfText();
+    if (ret != 0) {
+        boxer::show("Simple message boxes are very easy to create.", "Simple Example");
+    }
+    return ret;
+}
+
+int checkIfText() {
+    auto b = clip::has(clip::text_format());
+    if (!b) {
+        return -1;
+    }
     return 0;
 }

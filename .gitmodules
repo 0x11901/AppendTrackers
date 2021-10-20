@@ -1,3 +1,6 @@
 [submodule "clip"]
 	path = clip
 	url = git@github.com:dacap/clip.git
+[submodule "Boxer"]
+	path = Boxer
+	url = git@github.com:aaronmjacobs/Boxer.git

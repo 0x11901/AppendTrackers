@@ -34,7 +34,11 @@ set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
 # Add clip subdirectory to compile the library
 add_subdirectory(clip)
 
+# Add Boxer subdirectory to compile the library
+add_subdirectory(Boxer)
+
 target_link_libraries(
         ${APP_NAME}
         clip
+        Boxer
 )
