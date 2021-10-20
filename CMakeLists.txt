@@ -22,7 +22,8 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(
         ${APP_NAME}
         main.cpp
-)
+        except.cpp
+        except.h)
 
 # Disable clip examples and tests
 set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")

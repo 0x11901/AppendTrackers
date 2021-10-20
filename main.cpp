@@ -14,22 +14,38 @@
 
 #include "boxer/boxer.h"
 #include "clip/clip.h"
+#include "except.h"
 
-int checkIfText();
+void checkIfText();
+void checkIfMagnetURI(const std::string &text);
 
 int main() {
-    auto ret = 0;
-    ret = checkIfText();
-    if (ret != 0) {
-        boxer::show("Simple message boxes are very easy to create.", "Simple Example");
-    }
-    return ret;
-}
-
-int checkIfText() {
-    auto b = clip::has(clip::text_format());
-    if (!b) {
-        return -1;
+    try {
+        checkIfText();
+        std::string text;
+        clip::get_text(text);
+        checkIfMagnetURI(text);
+    } catch (except &e) {
+        boxer::show(e.what(), "runtime_error");
+    } catch (...) {
+        boxer::show("未知异常", "未知异常");
     }
     return 0;
+}
+
+void checkIfText() {
+    auto b = clip::has(clip::text_format());
+    if (!b) {
+        // std::string str{"剪贴板内容必须为纯文本"};
+        // const auto &x = u8"剪贴板内容必须为纯文本";
+        // std::string  =;
+        throw except("1111", 1);
+    }
+}
+
+void checkIfMagnetURI(const std::string &text) {
+    auto b = clip::has(clip::text_format());
+    if (!b) {
+        // throw except("剪贴板中并没有磁力链接", 2);
+    }
 }
