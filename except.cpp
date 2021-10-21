@@ -15,9 +15,5 @@
 #include "except.h"
 #include <stdexcept>
 
+except::except(const std::string &message) : runtime_error(message) {}
 except::~except() = default;
-except::except(const std::string &message, int errorCode) : runtime_error(message), errorCode(errorCode) {
-    this->message = message;
-    this->errorCode = errorCode;
-}
-except::except(const char *message, const std::string &message1) : runtime_error(message), message(message1) {}

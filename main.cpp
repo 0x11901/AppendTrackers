@@ -28,7 +28,7 @@ int main() {
     } catch (except &e) {
         boxer::show(e.what(), "runtime_error");
     } catch (...) {
-        boxer::show("未知异常", "未知异常");
+        boxer::show("unknown error.", "unknown_error");
     }
     return 0;
 }
@@ -36,10 +36,7 @@ int main() {
 void checkIfText() {
     auto b = clip::has(clip::text_format());
     if (!b) {
-        // std::string str{"剪贴板内容必须为纯文本"};
-        // const auto &x = u8"剪贴板内容必须为纯文本";
-        // std::string  =;
-        throw except("1111", 1);
+        throw except("clipboard contents must be text.");
     }
 }
 

@@ -19,13 +19,8 @@
 
 class except final : public std::runtime_error {
   public:
-    except(const std::string &message, int errorCode);
-    except(const char *message, const std::string &message1);
+    explicit except(const std::string &message);
     ~except() final;
-
-  private:
-    std::string message;
-    int errorCode;
 };
 
 #endif // APPENDTRACKERS_EXCEPT_H
