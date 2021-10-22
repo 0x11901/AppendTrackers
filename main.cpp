@@ -16,16 +16,20 @@
 #include "clip/clip.h"
 #include "except.h"
 #include <regex>
+#include <sstream>
+#include <string>
 
 void checkIfText();
-void checkIfMagnetURI(const std::string &text);
+std::vector<std::string> splitStringByLine(const std::string &text);
+void checkIfMagnetURI(const std::vector<std::string> &urls);
 
 int main() {
     try {
         checkIfText();
         std::string text;
         clip::get_text(text);
-        checkIfMagnetURI(text);
+        auto urls = splitStringByLine(text);
+        checkIfMagnetURI(urls);
     } catch (except &e) {
         boxer::show(e.what(), "runtime_error");
     } catch (...) {
@@ -41,4 +45,24 @@ void checkIfText() {
     }
 }
 
-void checkIfMagnetURI(const std::string &text) { std::regex txt_regex("[a-z]+\\.txt"); }
+std::vector<std::string> splitStringByLine(const std::string &text) {
+    std::istringstream input;
+    input.str(text);
+    std::vector<std::string> map;
+    for (std::string line; std::getline(input, line);) {
+#ifdef _WIN32
+        if (!line.empty() && *line.rbegin() == '\r') {
+            line.erase(line.length() - 1, 1);
+        }
+#endif
+        map.push_back(line);
+    }
+    return map;
+}
+
+void checkIfMagnetURI(const std::vector<std::string> &urls) {
+    std::regex txt_regex("[a-z]+\\.txt");
+    for (const auto &url : urls) {
+        printf("1");
+    }
+}
