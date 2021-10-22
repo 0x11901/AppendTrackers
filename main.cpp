@@ -55,14 +55,19 @@ std::shared_ptr<std::vector<std::string>> splitStringByLine(const std::string &t
             line.erase(line.length() - 1, 1);
         }
 #endif
-        map->push_back(line);
+        if (!line.empty()) {
+            map->push_back(line);
+        }
     }
     return map;
 }
 
 void checkIfMagnetURI(const std::vector<std::string> &urls) {
-    std::regex txt_regex("[a-z]+\\.txt");
+    std::regex magnet_url_regex("^(magnet:\\?xt=urn:btih:)[0-9a-fA-F]{40}.*$");
     for (const auto &url : urls) {
-        printf("1");
+        auto b = std::regex_match(url, magnet_url_regex);
+        if (!b) {
+            throw except("clipboard contents must be magnet urls.");
+        }
     }
 }
