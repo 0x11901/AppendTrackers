@@ -15,6 +15,10 @@
 #include "boxer/boxer.h"
 #include "clip/clip.h"
 #include "except.h"
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <iterator>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -22,6 +26,7 @@
 void checkIfText();
 std::shared_ptr<std::vector<std::string>> splitStringByLine(const std::string &text);
 void checkIfMagnetURI(const std::vector<std::string> &urls);
+void appendTrackers(const std::shared_ptr<std::vector<std::string>> &urls);
 
 int main() {
     try {
@@ -30,10 +35,9 @@ int main() {
         clip::get_text(text);
         auto urls = splitStringByLine(text);
         checkIfMagnetURI(*urls);
+        appendTrackers(urls);
     } catch (except &e) {
-        boxer::show(e.what(), "runtime_error");
-    } catch (...) {
-        boxer::show("unknown error.", "unknown_error");
+        boxer::show(e.what(), "runtime_error", boxer::Style::Warning);
     }
     return 0;
 }
@@ -67,7 +71,25 @@ void checkIfMagnetURI(const std::vector<std::string> &urls) {
     for (const auto &url : urls) {
         auto b = std::regex_match(url, magnet_url_regex);
         if (!b) {
-            throw except("clipboard contents must be magnet urls.");
+            // throw except("clipboard contents must be magnet urls.");
         }
     }
+}
+
+void appendTrackers(const std::shared_ptr<std::vector<std::string>> &urls) {
+    // std::ifstream ifs("tacker_tail.txt");
+
+    std::ifstream ifs;
+    ifs.open("tacker_tail.txt"); // open the input file
+
+    std::string file_content;
+    std::getline(std::ifstream("tacker_tail.txt"), file_content,
+                 std::string::traits_type::to_char_type(std::string::traits_type::eof()));
+    ifs.close();
+
+    std::cout << file_content;
+    // for (const auto &url : *urls) {
+    //     printf("1");
+    // }
+    boxer::show(file_content.c_str(), "runtime_error");
 }

@@ -44,21 +44,4 @@ target_link_libraries(
         Boxer
 )
 
-# Boost
-set(BOOST_ROOT C:/boost_1_77_0)
-set(Boost_USE_STATIC_LIBS ON)  # only find static libs
-set(Boost_USE_DEBUG_LIBS OFF) # ignore debug libs and
-set(Boost_USE_RELEASE_LIBS ON)  # only find release libs
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-
-find_package(Boost REQUIRED)
-if (Boost_FOUND)
-#    include_directories(${Boost_INCLUDE_DIRS})
-#
-#    MESSAGE(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}.")
-#    MESSAGE(STATUS "Boost_LIBRARIES = ${Boost_LIBRARIES}.")
-#    MESSAGE(STATUS "Boost_LIB_VERSION = ${Boost_LIB_VERSION}.")
-
-    target_link_libraries(${APP_NAME} ${Boost_LIBRARIES})
-endif ()
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
