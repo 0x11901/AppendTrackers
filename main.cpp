@@ -15,6 +15,7 @@
 #include "boxer/boxer.h"
 #include "clip/clip.h"
 #include "except.h"
+#include <regex>
 
 void checkIfText();
 void checkIfMagnetURI(const std::string &text);
@@ -40,9 +41,4 @@ void checkIfText() {
     }
 }
 
-void checkIfMagnetURI(const std::string &text) {
-    auto b = clip::has(clip::text_format());
-    if (!b) {
-        // throw except("剪贴板中并没有磁力链接", 2);
-    }
-}
+void checkIfMagnetURI(const std::string &text) { std::regex txt_regex("[a-z]+\\.txt"); }
