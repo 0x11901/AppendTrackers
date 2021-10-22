@@ -17,8 +17,8 @@
 #include "except.h"
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <iterator>
+#include <numeric>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -27,6 +27,7 @@ void checkIfText();
 std::shared_ptr<std::vector<std::string>> splitStringByLine(const std::string &text);
 void checkIfMagnetURI(const std::vector<std::string> &urls);
 void appendTrackers(const std::shared_ptr<std::vector<std::string>> &urls);
+void setTextToClip(const std::shared_ptr<std::vector<std::string>> &urls);
 
 int main() {
     try {
@@ -36,6 +37,7 @@ int main() {
         auto urls = splitStringByLine(text);
         checkIfMagnetURI(*urls);
         appendTrackers(urls);
+        setTextToClip(urls);
     } catch (except &e) {
         boxer::show(e.what(), "runtime_error", boxer::Style::Warning);
     }
@@ -71,25 +73,33 @@ void checkIfMagnetURI(const std::vector<std::string> &urls) {
     for (const auto &url : urls) {
         auto b = std::regex_match(url, magnet_url_regex);
         if (!b) {
-            // throw except("clipboard contents must be magnet urls.");
+            throw except("clipboard contents must be magnet urls.");
         }
     }
 }
 
 void appendTrackers(const std::shared_ptr<std::vector<std::string>> &urls) {
-    // std::ifstream ifs("tacker_tail.txt");
-
     std::ifstream ifs;
     ifs.open("tacker_tail.txt"); // open the input file
 
+    if (!ifs.is_open()) {
+        throw except("\"tacker_tail.txt\" is required.");
+    }
+
     std::string file_content;
-    std::getline(std::ifstream("tacker_tail.txt"), file_content,
-                 std::string::traits_type::to_char_type(std::string::traits_type::eof()));
+    std::getline(std::ifstream("tacker_tail.txt"), file_content);
     ifs.close();
 
-    std::cout << file_content;
-    // for (const auto &url : *urls) {
-    //     printf("1");
-    // }
-    boxer::show(file_content.c_str(), "runtime_error");
+    for (auto &url : *urls) {
+        url += file_content;
+    }
+}
+
+void setTextToClip(const std::shared_ptr<std::vector<std::string>> &urls) {
+    auto s = "\n";
+#ifdef _WIN32
+    s = "\r\n";
+#endif
+    clip::set_text(std::accumulate((*urls).begin(), (*urls).end(), std::string(),
+                                   [&s](const auto &a, const auto &b) { return a + (!a.empty() ? s : "") + b; }));
 }
