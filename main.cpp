@@ -20,7 +20,7 @@
 #include <string>
 
 void checkIfText();
-std::vector<std::string> splitStringByLine(const std::string &text);
+std::shared_ptr<std::vector<std::string>> splitStringByLine(const std::string &text);
 void checkIfMagnetURI(const std::vector<std::string> &urls);
 
 int main() {
@@ -29,7 +29,7 @@ int main() {
         std::string text;
         clip::get_text(text);
         auto urls = splitStringByLine(text);
-        checkIfMagnetURI(urls);
+        checkIfMagnetURI(*urls);
     } catch (except &e) {
         boxer::show(e.what(), "runtime_error");
     } catch (...) {
@@ -45,17 +45,17 @@ void checkIfText() {
     }
 }
 
-std::vector<std::string> splitStringByLine(const std::string &text) {
+std::shared_ptr<std::vector<std::string>> splitStringByLine(const std::string &text) {
     std::istringstream input;
     input.str(text);
-    std::vector<std::string> map;
+    auto map = std::make_shared<std::vector<std::string>>();
     for (std::string line; std::getline(input, line);) {
 #ifdef _WIN32
         if (!line.empty() && *line.rbegin() == '\r') {
             line.erase(line.length() - 1, 1);
         }
 #endif
-        map.push_back(line);
+        map->push_back(line);
     }
     return map;
 }
