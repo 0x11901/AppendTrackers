@@ -19,8 +19,11 @@ project(${APP_NAME})
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 23)
 
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/favicon.rc")
+
 add_executable(
         ${APP_NAME}
+        ${APP_ICON_RESOURCE_WINDOWS}
         main.cpp
         except.cpp
         except.h)
