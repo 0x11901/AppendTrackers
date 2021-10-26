@@ -19,14 +19,30 @@ project(${APP_NAME})
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 23)
 
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/favicon.rc")
+if (MACOSX OR APPLE)
+    # NOTE: Don't include the path in MACOSX_BUNDLE_ICON_FILE -- this is
+    # the property added to Info.plist
+    #     <key>CFBundleIconFile</key>
+    #     <string>logo</string>
+    set(MACOSX_BUNDLE_ICON_FILE logo)
+
+    # And this part tells CMake where to find and install the file itself
+    set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/Images/logo.icns)
+    # set_source_files_properties would create Resources folder to store icns
+    # The folder is at same path where Info.plist located
+    set_source_files_properties(${myApp_ICON} PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources")
+elseif (WIN32)
+    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/favicon.rc")
+endif ()
 
 add_executable(
         ${APP_NAME}
-        ${APP_ICON_RESOURCE_WINDOWS}
         main.cpp
         except.cpp
-        except.h)
+        except.h
+        ${APP_ICON_RESOURCE_WINDOWS}
+)
 
 # Disable clip examples and tests
 set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
