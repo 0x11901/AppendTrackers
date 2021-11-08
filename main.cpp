@@ -22,6 +22,9 @@
 #include <regex>
 #include <sstream>
 #include <string>
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 void checkIfText();
 std::shared_ptr<std::vector<std::string>> splitStringByLine(const std::string &text);
@@ -29,6 +32,9 @@ void checkIfMagnetURI(const std::vector<std::string> &urls);
 void appendTrackers(const std::shared_ptr<std::vector<std::string>> &urls);
 void setTextToClip(const std::shared_ptr<std::vector<std::string>> &urls);
 
+#ifdef _WIN32
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#endif
 int main() {
     try {
         checkIfText();
