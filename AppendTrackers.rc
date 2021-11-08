@@ -70,7 +70,7 @@ BEGIN
             VALUE "FileDescription", "A small tool for append trackers after magnet URI scheme."
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "AppendTrackers.rc"
-            VALUE "LegalCopyright", "Copyright (c) 2018-2021 WANG,Jingkai. All rights reserved"
+            VALUE "LegalCopyright", "Copyright (C) WANG,Jingkai. All rights reserved."
             VALUE "OriginalFilename", "AppendTrackers.exe"
             VALUE "ProductName", "AppendTrackers"
             VALUE "ProductVersion", "1.0.0.1"
